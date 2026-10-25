@@ -1,0 +1,147 @@
+---
+layout: default
+title: 首页
+---
+{%- assign homework = site.homework | sort: 'path' -%}
+{%- assign notes = site.blog | sort: 'path' | reverse -%}
+
+<style>
+  .article-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+
+  .article-list a {
+    display: flex; align-items: flex-start; gap: 18px;
+    padding: 20px 24px;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); box-shadow: var(--shadow);
+    color: var(--text); text-decoration: none;
+    transition: transform .18s ease, border-color .18s ease;
+  }
+  .article-list a:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+    text-decoration: none;
+  }
+
+  .article-list .idx {
+    flex: none;
+    width: 32px; height: 32px; border-radius: 9px;
+    display: grid; place-items: center;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--accent); font-size: 14px; font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .article-list .txt { display: block; min-width: 0; }
+  .article-list .t { display: block; font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+  .article-list .d { display: block; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+
+  .notice {
+    margin-bottom: 20px; padding: 14px 18px;
+    border-radius: 12px; font-size: 14.5px; color: var(--muted);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+  .notice code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .92em; padding: 2px 6px; border-radius: 5px;
+    background: color-mix(in srgb, var(--text) 8%, transparent);
+    color: var(--text);
+  }
+
+  @media (max-width: 480px) {
+    .article-list a { padding: 16px; gap: 14px; }
+    .article-list .t { font-size: 16px; }
+  }
+</style>
+
+<section class="hero wrap">
+  <div class="avatar" aria-hidden="true">{{ site.author | slice: 0, 1 }}</div>
+  <h1><em>{{ site.author }}</em></h1>
+  <p>{{ site.description }}</p>
+  <div class="actions">
+    <a class="btn btn-primary" href="#homework">课程作业</a>
+    <a class="btn btn-ghost" href="#blog">学习笔记</a>
+  </div>
+</section>
+
+<!-- ============ 课程作业 ============ -->
+<section class="section wrap" id="homework">
+  <h2 class="section-title">课程作业</h2>
+  <p class="section-desc">共 {{ homework | size }} 份，按顺序排列</p>
+
+  {% if homework.size > 0 %}
+  <div class="notice">
+    老师可直接访问 <code>{{ site.baseurl }}/#homework</code> 定位到这一栏。
+  </div>
+  <ol class="article-list">
+    {% for item in homework %}
+    {%- assign fb = item.path | split: '/' | last | remove: '.md' -%}
+    <li>
+      <a href="{{ item.url | relative_url }}">
+        <span class="idx">{{ forloop.index }}</span>
+        <span class="txt">
+          <span class="t">{{ item.title | default: fb }}</span>
+          {% if item.excerpt and item.excerpt != "" %}
+          <span class="d">{{ item.excerpt | strip_html | strip_newlines | truncate: 90 }}</span>
+          {% endif %}
+        </span>
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <div class="empty">
+    还没有作业。在 <code>_homework/</code> 里新建任意名字的 <code>.md</code> 文件，提交后就会出现在这里。
+  </div>
+  {% endif %}
+</section>
+
+<!-- ============ 学习笔记 ============ -->
+<section class="section wrap" id="blog">
+  <h2 class="section-title">学习笔记</h2>
+  <p class="section-desc">共 {{ notes | size }} 篇，最新的在前面</p>
+
+  {% if notes.size > 0 %}
+  <ol class="article-list">
+    {% for item in notes %}
+    {%- assign fb = item.path | split: '/' | last | remove: '.md' -%}
+    <li>
+      <a href="{{ item.url | relative_url }}">
+        <span class="idx">{{ forloop.index }}</span>
+        <span class="txt">
+          <span class="t">{{ item.title | default: fb }}</span>
+          {% if item.excerpt and item.excerpt != "" %}
+          <span class="d">{{ item.excerpt | strip_html | strip_newlines | truncate: 90 }}</span>
+          {% endif %}
+        </span>
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <div class="empty">
+    还没有笔记。在 <code>_blog/</code> 里新建任意名字的 <code>.md</code> 文件，提交后就会出现在这里。
+  </div>
+  {% endif %}
+</section>
+
+<!-- ============ 关于 ============ -->
+<section class="section wrap" id="about">
+  <h2 class="section-title">关于</h2>
+  <p class="section-desc">简单介绍你自己。</p>
+
+  <div class="grid">
+    <article class="card">
+      <h3>🎓 学习方向</h3>
+      <p>填写你的专业、研究方向或正在学的东西。</p>
+    </article>
+    <article class="card">
+      <h3>✉ 联系方式</h3>
+      <p>把这里改成你的学号和邮箱。</p>
+    </article>
+    <article class="card">
+      <h3>📚 参考</h3>
+      <p>列出参考文献或课程教材。</p>
+    </article>
+  </div>
+</section>

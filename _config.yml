@@ -1,0 +1,36 @@
+# ===== 站点信息 =====
+title: 我的主页
+description: 学习笔记与课程作业
+author: 你的名字
+
+# ===== 网址配置 =====
+# 用户站点（仓库名是 用户名.github.io）→ baseurl 留空 ""
+# 项目站点（仓库名是 homepage 之类）  → baseurl: "/homepage"
+url: "https://用户名.github.io"
+baseurl: ""
+
+# ===== 构建配置 =====
+markdown: kramdown
+
+# 两个内容区：作业、笔记。文件名都可以随便起。
+collections:
+  homework:
+    output: true
+  blog:
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: homework
+    values:
+      layout: article
+  - scope:
+      path: ""
+      type: blog
+    values:
+      layout: article
+
+exclude:
+  - README.md
+  - node_modules

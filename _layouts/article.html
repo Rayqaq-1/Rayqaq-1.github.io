@@ -1,0 +1,74 @@
+---
+layout: default
+---
+{%- if page.collection == 'blog' -%}
+  {%- assign list = site.blog | sort: 'path' | reverse -%}
+  {%- assign back_text = '返回笔记' -%}
+  {%- assign back_url = '/#blog' -%}
+{%- else -%}
+  {%- assign list = site.homework | sort: 'path' -%}
+  {%- assign back_text = '返回作业列表' -%}
+  {%- assign back_url = '/#homework' -%}
+{%- endif -%}
+
+{%- assign total = list.size -%}
+{%- assign idx = 0 -%}
+{%- for a in list -%}
+  {%- if a.url == page.url -%}{%- assign idx = forloop.index0 -%}{%- endif -%}
+{%- endfor -%}
+{%- assign idx_next = idx | plus: 1 -%}
+{%- assign fallback = page.path | split: '/' | last | remove: '.md' -%}
+
+<style>
+  .post-nav {
+    display: flex; justify-content: space-between; gap: 16px;
+    margin-top: 56px; padding-top: 28px;
+    border-top: 1px solid var(--line); font-size: 15px;
+  }
+  .post-nav a {
+    display: block; max-width: 46%;
+    padding: 12px 16px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--card);
+    color: var(--text); text-decoration: none;
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  .post-nav a:hover { border-color: var(--accent); transform: translateY(-2px); text-decoration: none; }
+  .post-nav .label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .post-nav .next { margin-left: auto; text-align: right; }
+  @media (max-width: 560px) {
+    .post-nav { flex-direction: column; }
+    .post-nav a { max-width: 100%; }
+    .post-nav .next { text-align: left; }
+  }
+</style>
+
+<section class="section wrap post">
+  <header class="post-header">
+    <h1>{{ page.title | default: fallback }}</h1>
+    {% if page.subtitle %}<p class="meta">{{ page.subtitle }}</p>{% endif %}
+  </header>
+
+  <div class="post-body">
+    {{ content }}
+  </div>
+
+  <nav class="post-nav">
+    {% if idx > 0 %}
+      {% assign prev = list[idx | minus: 1] %}
+      <a href="{{ prev.url | relative_url }}">
+        <span class="label">← 上一篇</span>{{ prev.title | default: prev.path }}
+      </a>
+    {% else %}
+      <span></span>
+    {% endif %}
+
+    {% if idx_next < total %}
+      {% assign next = list[idx_next] %}
+      <a class="next" href="{{ next.url | relative_url }}">
+        <span class="label">下一篇 →</span>{{ next.title | default: next.path }}
+      </a>
+    {% endif %}
+  </nav>
+
+  <p class="back"><a href="{{ back_url | relative_url }}">← {{ back_text }}</a></p>
+</section>
