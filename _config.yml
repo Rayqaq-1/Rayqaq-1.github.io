@@ -6,7 +6,7 @@ author: 你的名字
 # ===== 网址配置 =====
 # 用户站点（仓库名是 用户名.github.io）→ baseurl 留空 ""
 # 项目站点（仓库名是 homework 之类）  → baseurl: "/homework"
-url: "https://Rayqaq115-1.github.io"
+url: "https://Rayqaq-1.github.io"
 baseurl: ""
 
 # ===== 构建配置 =====
