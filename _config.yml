@@ -1,0 +1,30 @@
+# ===== 站点基本信息（老师看到的就是这些）=====
+title: 我的作业
+description: 课程作业提交页
+author: 你的名字
+
+# ===== 网址配置 =====
+# 用户站点（仓库名是 用户名.github.io）→ baseurl 留空 ""
+# 项目站点（仓库名是 homework 之类）  → baseurl: "/homework"
+url: "https://用户名.github.io"
+baseurl: ""
+
+# ===== 构建配置 =====
+markdown: kramdown
+
+# 文章集合：文件名完全自由，不需要日期
+collections:
+  articles:
+    output: true
+
+# _articles/ 里的文件自动套用 _layouts/article.html
+defaults:
+  - scope:
+      path: ""
+      type: articles
+    values:
+      layout: article
+
+exclude:
+  - README.md
+  - node_modules
