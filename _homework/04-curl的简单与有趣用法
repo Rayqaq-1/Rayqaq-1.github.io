@@ -1,9 +1,5 @@
 ---
-layout: post
 title: "curl 的简单与有趣用法"
-date: 2026-11-02 22:55:00 +0800
-categories: [工具]
-tags: [curl, 命令行, Linux]
 ---
 
 curl（Client URL）是一个强大的命令行工具，用于在 Linux/Unix 系统中传输数据。它支持多种协议，包括 HTTP、HTTPS、FTP、SFTP 等，几乎所有和后端、运维、网络打交道的场景里，都能见到它的身影。
